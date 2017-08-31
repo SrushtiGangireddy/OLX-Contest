@@ -35,11 +35,13 @@ public class Solution{
                 
             }else if(spl[0].equals("Q")){
                 
-                
-                if(spl[1].length() > 1){
+                String[] days = spl[1].split("\\.");
+          //      System.out.println(spl[1]);
+           //     System.out.println(days.length);
+                if(days.length > 1){
                     
-                    int day_start = Integer.valueOf(Character.toString(spl[1].charAt(0)));
-                    int day_end = Integer.valueOf(Character.toString(spl[1].charAt(2)));  
+                    int day_start = Integer.valueOf(days[0]);
+                    int day_end = Integer.valueOf(days[1]);  
                     
                     int query_p_id = -2;
                     int query_c_id = -2;
@@ -55,8 +57,9 @@ public class Solution{
                         if(spl[2].length() == 2 && (Integer.valueOf(spl[2])==-1)){
                             query_p_id = -1;
                         }else{
-                             query_p_id = Integer.valueOf(Character.toString(spl[2].charAt(0)));
-                            query_c_id = Integer.valueOf(Character.toString(spl[2].charAt(2)));
+                            String[] pcs = spl[2].split("\\.");
+                             query_p_id = Integer.valueOf(pcs[0]);
+                            query_c_id = Integer.valueOf(pcs[1]);
                         }
                         
                        
@@ -71,8 +74,9 @@ public class Solution{
                         if(spl[3].length() == 2 && (Integer.valueOf(spl[3]) == -1)){
                             query_s_id = -1;
                         }else{
-                             query_s_id = Integer.valueOf(Character.toString(spl[3].charAt(0)));
-                             query_r_id = Integer.valueOf(Character.toString(spl[3].charAt(2)));
+                            String[] srs=spl[3].split("\\.");
+                             query_s_id = Integer.valueOf(srs[0]);
+                             query_r_id = Integer.valueOf(srs[1]);
                         }
                         
                        
@@ -102,15 +106,17 @@ public class Solution{
                             int reg_id = 0;
                              
                              if(sale_details[0].length() > 1){
-                                prod_id = Integer.valueOf(Character.toString(sale_details[0].charAt(0)));
-                                cat_id = Integer.valueOf(Character.toString(sale_details[0].charAt(2)));
+                                 String[] prcs = sale_details[0].split("\\.");
+                                prod_id = Integer.valueOf(prcs[0]);
+                                cat_id = Integer.valueOf(prcs[1]);
                             }else{
                                 prod_id = Integer.valueOf(sale_details[0]);
                             }
                             
                             if(sale_details[1].length() > 1){
-                                sta_id = Integer.valueOf(Character.toString(sale_details[1].charAt(0)));
-                                reg_id = Integer.valueOf(Character.toString(sale_details[1].charAt(2)));
+                                String[] strs = sale_details[1].split("\\.");
+                                sta_id = Integer.valueOf(strs[0]);
+                                reg_id = Integer.valueOf(strs[1]);
                             }else{
                                 sta_id = Integer.valueOf(sale_details[1]);
                             }
@@ -197,8 +203,9 @@ public class Solution{
                         if(spl[2].length() == 2 && (Integer.valueOf(spl[2])==-1)){
                             query_p_id = -1;
                         }else{
-                             query_p_id = Integer.valueOf(Character.toString(spl[2].charAt(0)));
-                            query_c_id = Integer.valueOf(Character.toString(spl[2].charAt(2)));
+                            String[] qpcs = spl[2].split("\\.");
+                             query_p_id = Integer.valueOf(qpcs[0]);
+                            query_c_id = Integer.valueOf(qpcs[1]);
                         }
                         
                        
@@ -213,8 +220,9 @@ public class Solution{
                         if(spl[3].length() == 2 && (Integer.valueOf(spl[3]) == -1)){
                             query_s_id = -1;
                         }else{
-                             query_s_id = Integer.valueOf(Character.toString(spl[3].charAt(0)));
-                             query_r_id = Integer.valueOf(Character.toString(spl[3].charAt(2)));
+                            String[] srcs = spl[3].split("\\.");
+                             query_s_id = Integer.valueOf(srcs[0]);
+                             query_r_id = Integer.valueOf(srcs[1]);
                         }
                         
                        
@@ -244,15 +252,17 @@ public class Solution{
                             int reg_id = 0;
                              
                              if(sale_details[0].length() > 1){
-                                prod_id = Integer.valueOf(Character.toString(sale_details[0].charAt(0)));
-                                cat_id = Integer.valueOf(Character.toString(sale_details[0].charAt(2)));
+                                 String[] prcas = sale_details[0].split("\\.");
+                                prod_id = Integer.valueOf(prcas[0]);
+                                cat_id = Integer.valueOf(prcas[1]);
                             }else{
                                 prod_id = Integer.valueOf(sale_details[0]);
                             }
                             
                             if(sale_details[1].length() > 1){
-                                sta_id = Integer.valueOf(Character.toString(sale_details[1].charAt(0)));
-                                reg_id = Integer.valueOf(Character.toString(sale_details[1].charAt(2)));
+                                String[] streg = sale_details[1].split("\\.");
+                                sta_id = Integer.valueOf(streg[0]);
+                                reg_id = Integer.valueOf(streg[1]);
                             }else{
                                 sta_id = Integer.valueOf(sale_details[1]);
                             }
