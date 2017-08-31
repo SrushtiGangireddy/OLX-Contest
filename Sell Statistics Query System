@@ -105,16 +105,20 @@ public class Solution{
                             int sta_id = 0;
                             int reg_id = 0;
                              
-                             if(sale_details[0].length() > 1){
-                                 String[] prcs = sale_details[0].split("\\.");
-                                prod_id = Integer.valueOf(prcs[0]);
-                                cat_id = Integer.valueOf(prcs[1]);
+                             String[] sales_details = sale_details[0].split("\\.");
+                             
+                             if(sales_details.length > 1){
+                                
+                                prod_id = Integer.valueOf(sales_details[0]);
+                                cat_id = Integer.valueOf(sales_details[1]);
                             }else{
                                 prod_id = Integer.valueOf(sale_details[0]);
                             }
                             
-                            if(sale_details[1].length() > 1){
-                                String[] strs = sale_details[1].split("\\.");
+                              String[] strs = sale_details[1].split("\\.");
+                             
+                            if(strs.length > 1){
+                               
                                 sta_id = Integer.valueOf(strs[0]);
                                 reg_id = Integer.valueOf(strs[1]);
                             }else{
