@@ -1,0 +1,329 @@
+import java.io.*;
+import java.math.*;
+import java.util.*;
+import java.text.*;
+
+public class Solution{
+    public static void main(String args[]){
+        Scanner sc = new Scanner(System.in);
+        HashMap<Integer,ArrayList<String>> sales = new HashMap<Integer,ArrayList<String>>();
+        
+        int num_lines = sc.nextInt();
+        sc.nextLine();
+        
+        for(int i=0;i<num_lines;i++){
+            
+            String line = sc.nextLine();
+            String[] spl = line.split(" ");
+            
+            if(spl[0].equals("S")){
+                int day_num = Integer.valueOf(spl[1]);
+                
+                String sale_rep = spl[2]+" "+spl[3];
+                
+                if(sales.containsKey(day_num)){
+                    ArrayList<String> temp = (ArrayList<String>)sales.get(day_num);
+                    temp.add(sale_rep);
+                    sales.put(day_num,temp);
+                    
+                }else{
+                    ArrayList<String> temp = new ArrayList<String>();
+                    temp.add(sale_rep);
+                    sales.put(day_num,temp);
+                }
+                
+                
+            }else if(spl[0].equals("Q")){
+                
+                
+                if(spl[1].length() > 1){
+                    
+                    int day_start = Integer.valueOf(Character.toString(spl[1].charAt(0)));
+                    int day_end = Integer.valueOf(Character.toString(spl[1].charAt(2)));  
+                    
+                    int query_p_id = -2;
+                    int query_c_id = -2;
+                    
+                    int query_s_id = -4;
+                    int query_r_id = -4;
+                    
+                    int counter = 0;
+                    
+                    if(spl[2].length() > 1){
+                       // System.out.println(spl[2]);
+                        
+                        if(spl[2].length() == 2 && (Integer.valueOf(spl[2])==-1)){
+                            query_p_id = -1;
+                        }else{
+                             query_p_id = Integer.valueOf(Character.toString(spl[2].charAt(0)));
+                            query_c_id = Integer.valueOf(Character.toString(spl[2].charAt(2)));
+                        }
+                        
+                       
+                    }else{
+                    //    System.out.println(spl[2]);
+                        query_p_id = Integer.valueOf(spl[2]);
+                    }
+                    
+                    if(spl[3].length() > 1){
+                     //   System.out.println(spl[3]);
+                        
+                        if(spl[3].length() == 2 && (Integer.valueOf(spl[3]) == -1)){
+                            query_s_id = -1;
+                        }else{
+                             query_s_id = Integer.valueOf(Character.toString(spl[3].charAt(0)));
+                             query_r_id = Integer.valueOf(Character.toString(spl[3].charAt(2)));
+                        }
+                        
+                       
+                    }else{
+                      //  System.out.println(spl[3]);
+                        query_s_id = Integer.valueOf(spl[3]);
+                    }
+                    
+             //       System.out.println("Start day: "+day_start+" End day: "+day_end);
+              //      System.out.println("Query prod id: "+query_p_id+" Cat id: "+query_c_id+" State id: "+query_s_id+" Region id: "+query_r_id);
+                    
+                    for(int bet=day_start;bet<=day_end;bet++){
+                        
+                        if(sales.containsKey(bet)){
+                             ArrayList<String> temp = (ArrayList<String>)sales.get(bet);
+                   //          System.out.println(temp);
+                             int sale_len=temp.size();
+                        
+                         for(int x=0;x<sale_len;x++){
+                              String sale_item = (String)temp.get(x);
+                              String[] sale_details = sale_item.split(" ");
+                             
+                              int prod_id = 0;
+                            int cat_id = 0;
+                            
+                            int sta_id = 0;
+                            int reg_id = 0;
+                             
+                             if(sale_details[0].length() > 1){
+                                prod_id = Integer.valueOf(Character.toString(sale_details[0].charAt(0)));
+                                cat_id = Integer.valueOf(Character.toString(sale_details[0].charAt(2)));
+                            }else{
+                                prod_id = Integer.valueOf(sale_details[0]);
+                            }
+                            
+                            if(sale_details[1].length() > 1){
+                                sta_id = Integer.valueOf(Character.toString(sale_details[1].charAt(0)));
+                                reg_id = Integer.valueOf(Character.toString(sale_details[1].charAt(2)));
+                            }else{
+                                sta_id = Integer.valueOf(sale_details[1]);
+                            }
+                             
+                             
+                           //  System.out.println("product id: "+prod_id+" cat_id: "+cat_id+" state_id: "+sta_id+" region_id: "+reg_id);
+                          
+                           if(query_p_id == -1){
+                               if(query_s_id == -1){
+                                   counter++;
+                               }else{
+                                   if(query_s_id == sta_id){
+                                       if((query_r_id != -4) && (query_r_id == reg_id)){
+                                           counter++;
+                                       }else if(query_r_id == -4){
+                                           counter++;
+                                       }
+                                   }
+                               }
+                           }else{
+                               
+                               if(query_p_id == prod_id){
+                                   
+                                   if(query_c_id == -2){
+                                        if(query_s_id == -1){
+                                   counter++;
+                               }else{
+                                   if(query_s_id == sta_id){
+                                       if((query_r_id != -4) && (query_r_id == reg_id)){
+                                           counter++;
+                                       }else if(query_r_id == -4){
+                                           counter++;
+                                       }
+                                   }
+                               }
+                                   }else if(query_c_id != -2){
+                                       if(cat_id != 0){
+                                           if(query_c_id == cat_id){
+                                               if(query_s_id == -1){
+                                   counter++;
+                               }else{
+                                   if(query_s_id == sta_id){
+                                       if((query_r_id != -4) && (query_r_id == reg_id)){
+                                           counter++;
+                                       }else if(query_r_id == -4){
+                                           counter++;
+                                       }
+                                   }
+                               }
+                                           }
+                                       }
+                                   }
+                                   
+                               }
+                               
+                           }  
+                             
+                             
+                             
+                         }
+                     
+                            
+                        }
+                       
+                        
+                    }
+                    
+                    
+                    System.out.println(counter);
+                    
+                }else{
+                    
+                    int day_num = Integer.valueOf(spl[1]);
+                    
+                    int query_p_id = -2;
+                    int query_c_id = -2;
+                    
+                    int query_s_id = -4;
+                    int query_r_id = -4;
+                    
+                    if(spl[2].length() > 1){
+                       // System.out.println(spl[2]);
+                        
+                        if(spl[2].length() == 2 && (Integer.valueOf(spl[2])==-1)){
+                            query_p_id = -1;
+                        }else{
+                             query_p_id = Integer.valueOf(Character.toString(spl[2].charAt(0)));
+                            query_c_id = Integer.valueOf(Character.toString(spl[2].charAt(2)));
+                        }
+                        
+                       
+                    }else{
+                    //    System.out.println(spl[2]);
+                        query_p_id = Integer.valueOf(spl[2]);
+                    }
+                    
+                    if(spl[3].length() > 1){
+                     //   System.out.println(spl[3]);
+                        
+                        if(spl[3].length() == 2 && (Integer.valueOf(spl[3]) == -1)){
+                            query_s_id = -1;
+                        }else{
+                             query_s_id = Integer.valueOf(Character.toString(spl[3].charAt(0)));
+                             query_r_id = Integer.valueOf(Character.toString(spl[3].charAt(2)));
+                        }
+                        
+                       
+                    }else{
+                      //  System.out.println(spl[3]);
+                        query_s_id = Integer.valueOf(spl[3]);
+                    }
+                    
+                  
+                    
+                    
+                    if(!sales.containsKey(day_num)){
+                        System.out.println("0");
+                    }else{
+                        ArrayList<String> temp = (ArrayList<String>)sales.get(day_num);
+                        int counter=0;
+                        int sale_len=temp.size();
+                        
+                         for(int x=0;x<sale_len;x++){
+                              String sale_item = (String)temp.get(x);
+                              String[] sale_details = sale_item.split(" ");
+                             
+                              int prod_id = 0;
+                            int cat_id = 0;
+                            
+                            int sta_id = 0;
+                            int reg_id = 0;
+                             
+                             if(sale_details[0].length() > 1){
+                                prod_id = Integer.valueOf(Character.toString(sale_details[0].charAt(0)));
+                                cat_id = Integer.valueOf(Character.toString(sale_details[0].charAt(2)));
+                            }else{
+                                prod_id = Integer.valueOf(sale_details[0]);
+                            }
+                            
+                            if(sale_details[1].length() > 1){
+                                sta_id = Integer.valueOf(Character.toString(sale_details[1].charAt(0)));
+                                reg_id = Integer.valueOf(Character.toString(sale_details[1].charAt(2)));
+                            }else{
+                                sta_id = Integer.valueOf(sale_details[1]);
+                            }
+                             
+                             
+                           //  System.out.println("product id: "+prod_id+" cat_id: "+cat_id+" state_id: "+sta_id+" region_id: "+reg_id);
+                          
+                           if(query_p_id == -1){
+                               if(query_s_id == -1){
+                                   counter++;
+                               }else{
+                                   if(query_s_id == sta_id){
+                                       if((query_r_id != -4) && (query_r_id == reg_id)){
+                                           counter++;
+                                       }else if(query_r_id == -4){
+                                           counter++;
+                                       }
+                                   }
+                               }
+                           }else{
+                               
+                               if(query_p_id == prod_id){
+                                   
+                                   if(query_c_id == -2){
+                                        if(query_s_id == -1){
+                                   counter++;
+                               }else{
+                                   if(query_s_id == sta_id){
+                                       if((query_r_id != -4) && (query_r_id == reg_id)){
+                                           counter++;
+                                       }else if(query_r_id == -4){
+                                           counter++;
+                                       }
+                                   }
+                               }
+                                   }else if(query_c_id != -2){
+                                       if(cat_id != 0){
+                                           if(query_c_id == cat_id){
+                                               if(query_s_id == -1){
+                                   counter++;
+                               }else{
+                                   if(query_s_id == sta_id){
+                                       if((query_r_id != -4) && (query_r_id == reg_id)){
+                                           counter++;
+                                       }else if(query_r_id == -4){
+                                           counter++;
+                                       }
+                                   }
+                               }
+                                           }
+                                       }
+                                   }
+                                   
+                               }
+                               
+                           }  
+                             
+                             
+                             
+                         }
+                        System.out.println(counter);
+                    }
+                    
+                }
+                
+            }
+            
+           
+            
+        }
+        
+    //   System.out.println(sales); 
+    }
+}
